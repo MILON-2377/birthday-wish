@@ -3,9 +3,556 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hello how are you</title>
+    <title>Elegant Halloween Birthday Surprise</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Creepster&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a0633, #2c0b3f, #1a0633);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            overflow: hidden;
+            font-family: 'Playfair Display', serif;
+            color: #fff;
+            padding: 20px;
+            position: relative;
+        }
+        
+        /* Moon and stars background */
+        .moon {
+            position: absolute;
+            top: 50px;
+            right: 50px;
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, #f9f3c5, #f0e68c);
+            border-radius: 50%;
+            box-shadow: 0 0 50px rgba(249, 243, 197, 0.7);
+            z-index: 1;
+        }
+        
+        .stars {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+        
+        .star {
+            position: absolute;
+            background: #fff;
+            border-radius: 50%;
+            animation: twinkle 3s infinite;
+        }
+        
+        /* Pumpkin styling */
+        .pumpkin-container {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            margin: 0 auto 30px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            z-index: 10;
+            filter: drop-shadow(0 0 20px rgba(255, 107, 0, 0.8));
+        }
+        
+        .pumpkin-container:hover {
+            transform: scale(1.05) rotate(5deg);
+        }
+        
+        .pumpkin {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: #ff6b00;
+            border-radius: 50%;
+            box-shadow: 
+                0 0 30px rgba(255, 107, 0, 0.7),
+                0 0 60px rgba(255, 107, 0, 0.5),
+                inset 0 -20px 30px rgba(0, 0, 0, 0.3);
+            animation: float 3s infinite ease-in-out;
+            z-index: 10;
+        }
+        
+        .stem {
+            position: absolute;
+            top: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 30px;
+            height: 50px;
+            background: linear-gradient(to bottom, #2c8c2c, #1f5e1f);
+            border-radius: 10px;
+            box-shadow: inset 0 -5px 10px rgba(0, 0, 0, 0.5);
+            z-index: 10;
+        }
+        
+        .eye {
+            position: absolute;
+            width: 50px;
+            height: 70px;
+            background: #1a0633;
+            border-radius: 50%;
+            top: 80px;
+            animation: blink 5s infinite;
+            z-index: 10;
+        }
+        
+        .left-eye {
+            left: 60px;
+        }
+        
+        .right-eye {
+            right: 60px;
+        }
+        
+        .nose {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background: #1a0633;
+            border-radius: 50%;
+            top: 150px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+        }
+        
+        .mouth {
+            position: absolute;
+            width: 180px;
+            height: 80px;
+            background: #1a0633;
+            border-radius: 0 0 90px 90px;
+            bottom: 60px;
+            left: 50%;
+            transform: translateX(-50%);
+            overflow: hidden;
+            z-index: 10;
+        }
+        
+        .tongue {
+            position: absolute;
+            width: 60px;
+            height: 0;
+            background: linear-gradient(to bottom, #ff3366, #cc0044);
+            border-radius: 30px 30px 0 0;
+            bottom: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: tongue 3s infinite;
+            z-index: 10;
+        }
+        
+        .pop-me {
+            position: absolute;
+            bottom: -50px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: 'Creepster', cursive;
+            font-size: 2rem;
+            color: #ffcc00;
+            text-shadow: 0 0 10px #ff0000;
+            animation: pulse 1.5s infinite;
+            z-index: 10;
+        }
+        
+        /* Birthday Card */
+        .card-container {
+            display: none;
+            background: linear-gradient(135deg, #ff3366, #ff6b00);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.5);
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+            transform: scale(0);
+            animation: cardAppear 0.5s forwards 0.5s;
+            z-index: 100;
+            border: 3px solid #ffcc00;
+        }
+        
+        .card-container::before {
+            content: "";
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            background: linear-gradient(45deg, #ff0000, #ff9900, #ffff00, #ff9900, #ff0000);
+            background-size: 400% 400%;
+            z-index: -1;
+            animation: glitter 3s ease infinite;
+            border-radius: 25px;
+            opacity: 0.7;
+        }
+        
+        .card-content {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 40px 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .card-content::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><path d="M50,5 C70,5 85,20 85,40 C85,60 70,75 50,75 C30,75 15,60 15,40 C15,20 30,5 50,5 Z" fill="none" stroke="rgba(255,51,102,0.1)" stroke-width="1"/></svg>');
+            opacity: 0.2;
+            z-index: -1;
+        }
+        
+        .card-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3.8rem;
+            color: #ff3366;
+            margin-bottom: 25px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+        
+        .card-title::after {
+            content: "";
+            display: block;
+            width: 120px;
+            height: 3px;
+            background: linear-gradient(to right, transparent, #ffcc00, transparent);
+            margin: 10px auto;
+        }
+        
+        .message {
+            font-size: 1.4rem;
+            line-height: 1.7;
+            color: #333;
+            margin-bottom: 30px;
+            text-align: center;
+            min-height: 250px;
+            padding: 25px;
+            border: 2px dashed #ff3366;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.85);
+            outline: none;
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .signature {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.2rem;
+            color: #ff3366;
+            text-align: right;
+            margin-top: 30px;
+            position: relative;
+        }
+        
+        .signature::before {
+            content: "";
+            position: absolute;
+            top: -15px;
+            right: 0;
+            width: 200px;
+            height: 1px;
+            background: linear-gradient(to left, #ffcc00, transparent);
+        }
+        
+        .rose {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            font-size: 2.5rem;
+            animation: floatRose 4s infinite ease-in-out;
+        }
+        
+        /* Animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        @keyframes tongue {
+            0%, 100% { height: 0; }
+            50% { height: 60px; }
+        }
+        
+        @keyframes blink {
+            0%, 45%, 55%, 100% { height: 70px; }
+            48%, 52% { height: 5px; }
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: translateX(-50%) scale(1); }
+            50% { transform: translateX(-50%) scale(1.1); }
+        }
+        
+        @keyframes cardAppear {
+            0% { transform: scale(0); opacity: 0; }
+            70% { transform: scale(1.1); opacity: 1; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        
+        @keyframes glitter {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
+        }
+        
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+        
+        @keyframes floatRose {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            25% { transform: translateY(-10px) rotate(5deg); }
+            50% { transform: translateY(0) rotate(0deg); }
+            75% { transform: translateY(-10px) rotate(-5deg); }
+        }
+        
+        /* Fireflies */
+        .firefly {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: #ffcc00;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #ffcc00;
+            z-index: 2;
+            animation: fireflyMove 15s infinite linear;
+        }
+        
+        @keyframes fireflyMove {
+            0% { transform: translate(0, 0); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translate(100px, -100px); opacity: 0; }
+        }
+        
+        /* Responsive */
+        @media (max-width: 600px) {
+            .pumpkin-container { width: 250px; height: 250px; }
+            .card-title { font-size: 3rem; }
+            .message { font-size: 1.2rem; padding: 15px; }
+        }
+    </style>
 </head>
 <body>
+    <!-- Background elements -->
+    <div class="moon"></div>
     
+    <div class="stars" id="stars"></div>
+    
+    <!-- Fireflies -->
+    <div id="fireflies"></div>
+    
+    <!-- Pumpkin and Card Container -->
+    <div class="container">
+        <div class="pumpkin-container" id="pumpkin">
+            <div class="pumpkin">
+                <div class="stem"></div>
+                <div class="eye left-eye"></div>
+                <div class="eye right-eye"></div>
+                <div class="nose"></div>
+                <div class="mouth">
+                    <div class="tongue"></div>
+                </div>
+            </div>
+            <div class="pop-me">POP ME!</div>
+        </div>
+        
+        <div class="card-container" id="card">
+            <div class="card-content">
+                <h2 class="card-title">Happy Birthday My Pookie</h2>
+                <div class="rose">🌹</div>
+                <div class="message" contenteditable="true">
+                    Dearest Pookie,<br><br>
+                    On this magical day, I find myself reflecting on how incredibly blessed I am to have you in my life. 
+                    Your love is the most precious gift I've ever received, and every moment with you feels like a beautiful dream.<br><br>
+                    
+                    As you celebrate your birthday, I wish for you all the happiness, love, and magic that this world can offer. 
+                    May your day be filled with joy, laughter, and everything that brings a smile to your beautiful face.<br><br>
+                    
+                    You are my everything, and I cherish you more than words can express. 
+                    Here's to many more birthdays together, creating memories that last a lifetime.<br><br>
+                    
+                    With all my love,
+                </div>
+                <div class="signature">Tom 👻</div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const pumpkin = document.getElementById('pumpkin');
+            const card = document.getElementById('card');
+            const message = document.querySelector('.message');
+            const stars = document.getElementById('stars');
+            const fireflies = document.getElementById('fireflies');
+            
+            // Create stars
+            for (let i = 0; i < 100; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.width = Math.random() * 3 + 1 + 'px';
+                star.style.height = star.style.width;
+                star.style.left = Math.random() * 100 + 'vw';
+                star.style.top = Math.random() * 100 + 'vh';
+                star.style.animationDelay = Math.random() * 3 + 's';
+                stars.appendChild(star);
+            }
+            
+            // Create fireflies
+            for (let i = 0; i < 15; i++) {
+                const firefly = document.createElement('div');
+                firefly.className = 'firefly';
+                firefly.style.left = Math.random() * 100 + 'vw';
+                firefly.style.top = Math.random() * 100 + 'vh';
+                firefly.style.animationDelay = Math.random() * 15 + 's';
+                firefly.style.animationDuration = 10 + Math.random() * 20 + 's';
+                fireflies.appendChild(firefly);
+            }
+            
+            pumpkin.addEventListener('click', function() {
+                // Create confetti effect
+                createConfetti();
+                
+                // Hide pumpkin and show card
+                pumpkin.style.display = 'none';
+                card.style.display = 'block';
+                
+                // Play pop sound
+                playPopSound();
+                
+                // Play Pehli Dafa melody after a delay
+                setTimeout(playPehliDafaMelody, 800);
+            });
+            
+            function createConfetti() {
+                const colors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff'];
+                const container = document.body;
+                
+                for (let i = 0; i < 150; i++) {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.left = Math.random() * 100 + 'vw';
+                    confetti.style.top = '-20px';
+                    confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
+                    container.appendChild(confetti);
+                    
+                    // Animate confetti falling
+                    const animation = confetti.animate([
+                        { top: '-20px', opacity: 1, transform: `rotate(0deg)` },
+                        { top: Math.random() * 100 + 50 + 'vh', opacity: 1 },
+                        { top: '100vh', opacity: 0 }
+                    ], {
+                        duration: 2000 + Math.random() * 3000,
+                        easing: 'cubic-bezier(0,0.9,0.57,1)',
+                        delay: Math.random() * 500
+                    });
+                    
+                    // Remove confetti after animation
+                    animation.onfinish = () => confetti.remove();
+                }
+            }
+            
+            function playPopSound() {
+                // Create audio context
+                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+                
+                // Configure sound
+                oscillator.type = 'sine';
+                oscillator.frequency.setValueAtTime(300, audioContext.currentTime);
+                oscillator.frequency.exponentialRampToValueAtTime(50, audioContext.currentTime + 0.3);
+                
+                gainNode.gain.setValueAtTime(0.5, audioContext.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3);
+                
+                // Play and stop
+                oscillator.start();
+                setTimeout(() => {
+                    oscillator.stop();
+                }, 300);
+            }
+            
+            function playPehliDafaMelody() {
+                // Create audio context
+                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                
+                // Notes for "Pehli Dafa" melody (simplified)
+                const melody = [
+                    { note: 659.25, duration: 0.5 }, // E5
+                    { note: 587.33, duration: 0.5 },  // D5
+                    { note: 523.25, duration: 1.0 },  // C5
+                    { note: 0, duration: 0.2 },       // Rest
+                    { note: 659.25, duration: 0.5 },  // E5
+                    { note: 587.33, duration: 0.5 },  // D5
+                    { note: 523.25, duration: 1.0 },  // C5
+                    { note: 0, duration: 0.2 },       // Rest
+                    { note: 493.88, duration: 0.5 },  // B4
+                    { note: 440.00, duration: 0.5 },  // A4
+                    { note: 392.00, duration: 1.0 }   // G4
+                ];
+                
+                let time = audioContext.currentTime;
+                
+                melody.forEach(tone => {
+                    if (tone.note !== 0) {
+                        const oscillator = audioContext.createOscillator();
+                        const gainNode = audioContext.createGain();
+                        
+                        oscillator.connect(gainNode);
+                        gainNode.connect(audioContext.destination);
+                        
+                        oscillator.type = 'sine';
+                        oscillator.frequency.value = tone.note;
+                        
+                        gainNode.gain.setValueAtTime(0.3, time);
+                        gainNode.gain.exponentialRampToValueAtTime(0.01, time + tone.duration);
+                        
+                        oscillator.start(time);
+                        oscillator.stop(time + tone.duration);
+                    }
+                    time += tone.duration;
+                });
+            }
+            
+            // Allow saving the message
+            message.addEventListener('blur', function() {
+                localStorage.setItem('birthdayMessage', this.innerHTML);
+            });
+            
+            // Load saved message if exists
+            const savedMessage = localStorage.getItem('birthdayMessage');
+            if (savedMessage) {
+                message.innerHTML = savedMessage;
+            }
+        });
+    </script>
 </body>
 </html>
+
